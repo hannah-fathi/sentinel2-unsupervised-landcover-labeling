@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: >
+  If you use this repository in your research, teaching, or software,
+  please cite it using the metadata provided below.
+
+title: "Sentinel-2 Unsupervised Land Cover Labeling"
+
+abstract: >
+  An end-to-end unsupervised land-cover labeling framework for Sentinel-2
+  imagery that integrates Google Earth Engine, spectral feature engineering,
+  explainable semantic mapping, unsupervised clustering, and lightweight
+  ensemble learning to generate reproducible raster and polygon pseudo-labels
+  for downstream Earth observation and machine learning applications.
+
+type: software
+
+authors:
+  - family-names: Fathi
+    given-names: Hannah
+
+repository-code: "https://github.com/hannah-fathi/sentinel2-unsupervised-landcover-labeling"
+
+url: "https://github.com/hannah-fathi/sentinel2-unsupervised-landcover-labeling"
+
+license: MIT
+
+keywords:
+  - Remote Sensing
+  - Earth Observation
+  - Sentinel-2
+  - Google Earth Engine
+  - Geospatial AI
+  - Land Cover Mapping
+  - Unsupervised Learning
+  - Clustering
+  - KMeans
+  - Gaussian Mixture Model
+  - Ensemble Learning
+  - Pseudo Labeling
+  - Semantic Mapping
+  - Spectral Indices
+  - Computer Vision
+
+language: en
+
+version: "1.0.0"
+
+date-released: 2026-07-22
+
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Fathi
+      given-names: Hannah
+  title: "Sentinel-2 Unsupervised Land Cover Labeling"
+  version: "1.0.0"
+  year: 2026
+  url: "https://github.com/hannah-fathi/sentinel2-unsupervised-landcover-labeling"
