@@ -20,6 +20,23 @@ Instead of training a supervised classifier, this work focuses on automatically 
 
 The generated labels are designed to support downstream machine learning tasks including semantic segmentation, land-cover classification, and self-supervised representation learning.
 
+
+## Project Visualization
+
+The proposed framework integrates Google Earth Engine processing and local ensemble learning for generating semantic pseudo-labels from Sentinel-2 imagery.
+
+The overall workflow produces both raster-level and polygon-level land-cover representations.
+
+<p align="center">
+<img src="figures/gee_pipeline/08_vegetation_cluster_map.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 1.</b>
+Sentinel-2 unsupervised land-cover clustering result generated using the Google Earth Engine pipeline.
+</p>
+
 ---
 
 # Technical Contributions
@@ -145,6 +162,27 @@ Final Semantic Pseudo Labels
 
 ---
 
+## Framework Overview
+
+The framework consists of two complementary pipelines:
+
+1. Google Earth Engine raster pseudo-label generation
+2. Local ensemble polygon labeling
+
+The two-stage design enables both pixel-level mapping and GIS-ready vector annotation.
+
+<p align="center">
+<img src="figures/gee_pipeline/01_aoi_geometry_summary.png"
+width="750">
+</p>
+
+<p align="center">
+<b>Figure 2.</b>
+Area of Interest characterization including geometry information, bounding box, centroid and spatial extent.
+</p>
+
+---
+
 # Pipeline I — Google Earth Engine Raster Labeling
 
 The first workflow performs large-scale raster labeling entirely inside Google Earth Engine.
@@ -166,6 +204,31 @@ Major processing stages include
 
 ---
 
+## Google Earth Engine Pipeline Results
+
+The first pipeline generates raster pseudo-labels directly within Google Earth Engine.
+
+The workflow includes:
+
+- Sentinel-2 compositing
+- Feature engineering
+- Unsupervised clustering
+- Semantic interpretation
+- Spatial refinement
+
+
+<p align="center">
+<img src="figures/gee_pipeline/02_ranked_clustering_runs.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 3.</b>
+Ranking of KMeans and Gaussian Mixture Model clustering configurations using internal validation criteria.
+</p>
+
+---
+
 # Pipeline II — Local Ensemble Polygon Labeling
 
 The second workflow operates locally using Sentinel-2 Cloud Optimized GeoTIFFs.
@@ -181,6 +244,24 @@ Major components include
 - GeoJSON export
 - GeoPackage export
 - Interactive HTML visualization
+
+---
+
+## Ensemble Polygon Labeling Results
+
+
+The second pipeline generates GIS-ready vector pseudo-labels by combining multiple unsupervised and lightweight supervised models.
+
+
+<p align="center">
+<img src="figures/ensemble_pipeline/08_final_label_map.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 10.</b>
+Final ensemble semantic labeling map generated from Sentinel-2 imagery.
+</p>
 
 ---
 
@@ -201,6 +282,18 @@ The feature engineering stage extracts 17 remote sensing descriptors, including
 - GLCM texture descriptors
 
 These features provide complementary spectral and spatial information for unsupervised semantic clustering.
+
+---
+
+<p align="center">
+<img src="figures/ensemble_pipeline/03_composite_indices_statistics.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 4.</b>
+Spectral index statistics extracted from Sentinel-2 composites across multiple AOIs.
+</p>
 
 ---
 
@@ -226,6 +319,18 @@ This improves both interpretability and reproducibility of the generated labels.
 
 ---
 
+<p align="center">
+<img src="figures/gee_pipeline/03_semantic_mapping_summary.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 5.</b>
+Explainable semantic mapping of spectral clusters into meaningful land-cover categories using NDVI/NDWI-based rules.
+</p>
+
+---
+
 # Experimental Results
 
 ## Pipeline I — Google Earth Engine
@@ -240,6 +345,23 @@ Study Area
 - Sparse Vegetation
 - Dense Vegetation
 
+
+## Visual Evaluation of Raster Labels
+
+
+### KMeans Clustering
+
+<p align="center">
+<img src="figures/gee_pipeline/04_kmeans_raw.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 6.</b>
+Raw KMeans clustering output with pixel statistics and class area estimation.
+</p>
+
+
 ### KMeans
 
 | Class | Area (ha) |
@@ -248,6 +370,18 @@ Study Area
 | Sparse Vegetation | 23,451.85 |
 | Dense Vegetation | 5,703.01 |
 
+
+<p align="center">
+<img src="figures/gee_pipeline/05_kmeans_smoothed.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 7.</b>
+Spatially refined KMeans result after 3×3 focal mode filtering.
+</p>
+
+
 ### Gaussian Mixture
 
 | Class | Area (ha) |
@@ -255,6 +389,32 @@ Study Area
 | Non-Vegetation | 53,264.46 |
 | Sparse Vegetation | 30,231.68 |
 | Dense Vegetation | 5,558.65 |
+
+
+### Gaussian Mixture Model
+
+
+<p align="center">
+<img src="figures/gee_pipeline/09_gmm_split_map.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 8.</b>
+Split visualization comparing Sentinel-2 background imagery and GMM classification output.
+</p>
+
+
+<p align="center">
+<img src="figures/gee_pipeline/12_gmm_k3_final_map.png"
+width="850">
+</p>
+
+<p align="center">
+<b>Figure 9.</b>
+Final three-class semantic map generated using GMM clustering (k=3).
+</p>
+
 
 Both clustering approaches produced consistent semantic distributions, with non-vegetated regions dominating the study area and dense vegetation accounting for approximately 6% of the mapped surface.
 
@@ -278,7 +438,41 @@ Final semantic classes
 | Silhouette Score | 0.585 |
 | Davies–Bouldin Index | 0.542 |
 
+
+<p align="center">
+<img src="figures/ensemble_pipeline/07_pca_cluster_separation.png"
+width="750">
+</p>
+
+<p align="center">
+<b>Figure 11.</b>
+PCA projection showing separation between semantic vegetation clusters.
+</p>
+
 PCA visualization demonstrated good separation between semantic vegetation classes after ensemble refinement.
+
+---
+
+## Qualitative Assessment
+
+
+Representative samples from generated classes are shown below.
+
+
+<p align="center">
+<img src="figures/ensemble_pipeline/10a_non_vegetation.png"
+width="400">
+<img src="figures/ensemble_pipeline/10c_non_tree_vegetation.png"
+width="400">
+<img src="figures/ensemble_pipeline/10e_tree_vegetation.png"
+width="400">
+</p>
+
+
+<p align="center">
+<b>Figure 12.</b>
+Representative examples of generated semantic land-cover classes.
+</p>
 
 ---
 
