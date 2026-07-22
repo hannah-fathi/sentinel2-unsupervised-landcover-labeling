@@ -95,7 +95,6 @@ sentinel2-unsupervised-landcover-labeling
 │
 ├── database/
 │
-├── assets/
 │
 ├── README.md
 ├── requirements.txt
