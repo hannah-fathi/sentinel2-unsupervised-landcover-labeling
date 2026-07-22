@@ -20,6 +20,7 @@ Instead of training a supervised classifier, this work focuses on automatically 
 
 The generated labels are designed to support downstream machine learning tasks including semantic segmentation, land-cover classification, and self-supervised representation learning.
 
+---
 
 ## Project Visualization
 
@@ -28,7 +29,7 @@ The proposed framework integrates Google Earth Engine processing and local ensem
 The overall workflow produces both raster-level and polygon-level land-cover representations.
 
 <p align="center">
-<img src="figures/gee_pipeline/08_vegetation_cluster_map.png"
+<img src="figures/gee_pipeline/08_overall_vegetation_map.jpg"
 width="850">
 </p>
 
@@ -171,7 +172,7 @@ The framework consists of two complementary pipelines:
 The two-stage design enables both pixel-level mapping and GIS-ready vector annotation.
 
 <p align="center">
-<img src="figures/gee_pipeline/01_aoi_geometry_summary.png"
+<img src="figures/gee_pipeline/01_aoi_geometry_summary.jpg"
 width="750">
 </p>
 
@@ -217,7 +218,7 @@ The workflow includes:
 
 
 <p align="center">
-<img src="figures/gee_pipeline/02_ranked_clustering_runs.png"
+<img src="figures/gee_pipeline/02_cluster_ranking_kmeans_gmm.png"
 width="850">
 </p>
 
@@ -248,12 +249,10 @@ Major components include
 
 ## Ensemble Polygon Labeling Results
 
-
 The second pipeline generates GIS-ready vector pseudo-labels by combining multiple unsupervised and lightweight supervised models.
 
-
 <p align="center">
-<img src="figures/ensemble_pipeline/08_final_label_map.png"
+<img src="figures/ensemble_pipeline/08_final_landcover_map.jpg"
 width="850">
 </p>
 
@@ -285,7 +284,7 @@ These features provide complementary spectral and spatial information for unsupe
 ---
 
 <p align="center">
-<img src="figures/ensemble_pipeline/03_composite_indices_statistics.png"
+<img src="figures/ensemble_pipeline/03_composite_statistics.jpg"
 width="850">
 </p>
 
@@ -361,15 +360,6 @@ Raw KMeans clustering output with pixel statistics and class area estimation.
 </p>
 
 
-### KMeans
-
-| Class | Area (ha) |
-|---------|-----------:|
-| Non-Vegetation | 59,661.65 |
-| Sparse Vegetation | 23,451.85 |
-| Dense Vegetation | 5,703.01 |
-
-
 <p align="center">
 <img src="figures/gee_pipeline/05_kmeans_smoothed.png"
 width="850">
@@ -379,6 +369,17 @@ width="850">
 <b>Figure 7.</b>
 Spatially refined KMeans result after 3×3 focal mode filtering.
 </p>
+
+
+
+### KMeans
+
+| Class | Area (ha) |
+|---------|-----------:|
+| Non-Vegetation | 59,661.65 |
+| Sparse Vegetation | 23,451.85 |
+| Dense Vegetation | 5,703.01 |
+
 
 
 ### Gaussian Mixture
@@ -394,7 +395,7 @@ Spatially refined KMeans result after 3×3 focal mode filtering.
 
 
 <p align="center">
-<img src="figures/gee_pipeline/09_gmm_split_map.png"
+<img src="figures/gee_pipeline/09_gmm_split_map.jpg"
 width="850">
 </p>
 
@@ -405,13 +406,13 @@ Split visualization comparing Sentinel-2 background imagery and GMM classificati
 
 
 <p align="center">
-<img src="figures/gee_pipeline/12_gmm_k3_final_map.png"
+<img src="figures/gee_pipeline/10_gmm_final_classes.jpg"
 width="850">
 </p>
 
 <p align="center">
 <b>Figure 9.</b>
-Final three-class semantic map generated using GMM clustering (k=3).
+Final three-class semantic map generated using GMM clustering.
 </p>
 
 
@@ -439,7 +440,7 @@ Final semantic classes
 
 
 <p align="center">
-<img src="figures/ensemble_pipeline/07_pca_cluster_separation.png"
+<img src="figures/ensemble_pipeline/07_pca_projection.jpg"
 width="750">
 </p>
 
@@ -454,23 +455,78 @@ PCA visualization demonstrated good separation between semantic vegetation class
 
 ## Qualitative Assessment
 
+Representative Sentinel-2 samples from the generated semantic land-cover classes are presented below.
 
-Representative samples from generated classes are shown below.
+The visualization includes three semantic categories:
 
+- Non-Vegetation
+- Non-Tree Vegetation
+- Tree Vegetation
+
+
+---
+
+### Class 0 — Non-Vegetation
+
+Examples of non-vegetated surfaces including bare soil, built-up areas, and water-related regions.
 
 <p align="center">
-<img src="figures/ensemble_pipeline/10a_non_vegetation.png"
-width="400">
-<img src="figures/ensemble_pipeline/10c_non_tree_vegetation.png"
-width="400">
-<img src="figures/ensemble_pipeline/10e_tree_vegetation.png"
-width="400">
-</p>
 
+<img src="figures/ensemble_pipeline/10a_non_vegetation_sample_01.jpg"
+width="400">
+
+<img src="figures/ensemble_pipeline/10b_non_vegetation_sample_02.jpg"
+width="400">
+
+</p>
 
 <p align="center">
 <b>Figure 12.</b>
-Representative examples of generated semantic land-cover classes.
+Representative examples of the Non-Vegetation semantic class generated from Sentinel-2 imagery.
+</p>
+
+
+---
+
+### Class 1 — Non-Tree Vegetation
+
+Examples of herbaceous vegetation, agricultural fields, and low-height vegetation regions.
+
+<p align="center">
+
+<img src="figures/ensemble_pipeline/10c_non_tree_vegetation_sample_01.jpg"
+width="400">
+
+<img src="figures/ensemble_pipeline/10d_non_tree_vegetation_sample_02.jpg"
+width="400">
+
+</p>
+
+<p align="center">
+<b>Figure 13.</b>
+Representative examples of the Non-Tree Vegetation semantic class generated from Sentinel-2 imagery.
+</p>
+
+
+---
+
+### Class 2 — Tree Vegetation
+
+Examples of dense vegetation areas and tree-dominated regions identified by the ensemble labeling framework.
+
+<p align="center">
+
+<img src="figures/ensemble_pipeline/10e_tree_vegetation_sample_01.jpg"
+width="400">
+
+<img src="figures/ensemble_pipeline/10f_tree_vegetation_sample_02.jpg"
+width="400">
+
+</p>
+
+<p align="center">
+<b>Figure 14.</b>
+Representative examples of the Tree Vegetation semantic class generated from Sentinel-2 imagery.
 </p>
 
 ---
